@@ -7,7 +7,11 @@ var joystick_active = false
 
 func calculate_move_vector(event_position):
 	var joystick_center = position + Vector2(90, 90)
-	return (event_position - joystick_center).normalized()
+	var joystick_vector = (event_position - joystick_center) / Vector2(90, 90)
+
+	joystick_vector.x = clamp(joystick_vector.x, -1, 1)
+	joystick_vector.y = clamp(joystick_vector.y, -1, 1)
+	return joystick_vector
 
 func _input(event):
 	if (event is InputEventScreenTouch or event is InputEventScreenDrag):
