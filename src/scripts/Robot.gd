@@ -1,9 +1,13 @@
 extends KinematicBody2D
 
-const ROTATION_SPEED = 7
-const MOVE_SPEED = 500
+var ROTATION_SPEED = 7
+var MOVE_SPEED = 500
 
 var virtual_joystick_strength = Vector2.ZERO
+
+func _ready():
+	get_parent().get_node('MoveSpeed').text = str(MOVE_SPEED)
+	get_parent().get_node('RotationSpeed').text = str(ROTATION_SPEED)
 
 
 func _physics_process(delta: float):
@@ -17,9 +21,20 @@ func _physics_process(delta: float):
 	force.x += Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	force.y += Input.get_action_strength("ui_up") - Input.get_action_strength("ui_down")
 
+	if force.x > 1:
+		force.x -= 1
+	elif force.x < -1:
+		force.x += 1
+
+	if force.y > 1:
+		force.y -= 1
+	elif force.y < -1:
+		force.y += 1
+
 	# Input do joystick virtual
 	force.x += virtual_joystick_strength.x
 	force.y += virtual_joystick_strength.y
+
 
 	# Normaliza o vetor de força
 	if force.length() > 1:
@@ -36,3 +51,11 @@ func _physics_process(delta: float):
 
 func _on_Joystick_joystick_input(movement_vector):
 	virtual_joystick_strength = movement_vector * Vector2(1, -1)
+
+
+func _on_MoveSpeed_text_entered(new_text:String):
+	MOVE_SPEED = float(new_text)
+
+
+func _on_RotationSpeed_text_entered(new_text:String):
+	ROTATION_SPEED = float(new_text)

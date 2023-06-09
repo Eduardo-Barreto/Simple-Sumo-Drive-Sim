@@ -1,20 +1,18 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/Collectible.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Collectible.gd" type="Script" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 32, 32 )
-
 [node name="Collectible" type="Area2D"]
 script = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
-
 [node name="Sprite" type="Sprite" parent="."]
 show_behind_parent = true
-scale = Vector2( 0.2, 0.2 )
+scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2( 0.25, 0.25 )
+polygon = PoolVector2Array( 182.7, -112.2, 181.2, -104, 178.3, -104, 159, -81.2, 159, -80.2, 183, -31, 176, -31, 158, -14.7, 158, 62, 153.9, 62, 29.9, 171, 24.8, 171, -137, 85, -137, 9.29999, -159.7, -1.10001, -158, -9, -155.8, -9, -139, -37.9, -182.9, -66.9, -180.7, -74, -177.6, -74, -47.6, -169, -41.6, -169, -4.10001, -146.5, 23, -167.5, 23, -173.3 )
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
