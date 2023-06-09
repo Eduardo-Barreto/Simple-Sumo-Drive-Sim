@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
-var ROTATION_SPEED = 7
-var MOVE_SPEED = 500
+var ROTATION_SPEED = 14
+var MOVE_SPEED = 1400
 
 var virtual_joystick_strength = Vector2.ZERO
 
@@ -11,6 +11,9 @@ func _ready():
 
 
 func _physics_process(delta: float):
+	if Input.is_action_just_pressed("ui_accept"):
+		position = get_viewport_rect().size / 2
+
 	var force = Vector2.ZERO
 
 	# Input do teclado
@@ -47,6 +50,10 @@ func _physics_process(delta: float):
 	var movement = direction * MOVE_SPEED * delta * force.y
 
 	position += movement
+
+	# clamp postion
+	position.x = clamp(position.x, 0, get_viewport_rect().size.x)
+	position.y = clamp(position.y, 0, get_viewport_rect().size.y)
 
 
 func _on_Joystick_joystick_input(movement_vector):

@@ -56,10 +56,10 @@ text = "500"
 align = 2
 valign = 1
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="DohyoArea" type="Area2D" parent="."]
 position = Vector2( 640, 360 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DohyoArea"]
 shape = SubResource( 3 )
 
 [node name="MoveSpeed" type="LineEdit" parent="."]
@@ -97,6 +97,6 @@ custom_fonts/font = SubResource( 4 )
 text = "500"
 
 [connection signal="joystick_input" from="Joystick" to="Robot" method="_on_Joystick_joystick_input"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
+[connection signal="body_exited" from="DohyoArea" to="." method="_on_Area2D_body_exited"]
 [connection signal="text_entered" from="MoveSpeed" to="Robot" method="_on_MoveSpeed_text_entered"]
 [connection signal="text_entered" from="RotationSpeed" to="Robot" method="_on_RotationSpeed_text_entered"]
