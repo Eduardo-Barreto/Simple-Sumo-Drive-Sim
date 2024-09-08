@@ -56,4 +56,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: game_web
-          path: game_web.zip
+          path: src/game_web.zip
