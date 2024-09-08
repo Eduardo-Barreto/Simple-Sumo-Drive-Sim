@@ -43,7 +43,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3.9.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/web
+          publish_dir: ./src/build/web
           force_orphan: true
           user_name: "github-ci[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
