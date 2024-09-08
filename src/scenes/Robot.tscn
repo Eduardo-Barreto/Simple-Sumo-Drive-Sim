@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://j3xfx5o3yv6x"]
+
+[ext_resource type="Script" path="res://scripts/sumo.gd" id="1_vxbxo"]
+[ext_resource type="Texture2D" uid="uid://ply4bqol2nd4" path="res://assets/sumo.png" id="2_ii2q7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0an5p"]
+size = Vector2(200, 200)
+
+[node name="Sumo" type="CharacterBody2D"]
+script = ExtResource("1_vxbxo")
+
+[node name="SumoAsset" type="Sprite2D" parent="."]
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("2_ii2q7")
+
+[node name="SumoCollision" type="CollisionShape2D" parent="."]
+scale = Vector2(0.45, 0.45)
+shape = SubResource("RectangleShape2D_0an5p")
