@@ -12,17 +12,17 @@ func get_normalized_inputs() -> Vector2:
 	var left_input = 0.0
 	var right_input = 0.0
 	
-	var action_forward = int(Input.is_action_pressed("move_forward")) * keyboard_sensitivity
-	var action_backward = int(Input.is_action_pressed("move_backward")) * keyboard_sensitivity
-	var action_left = int(Input.is_action_pressed("turn_left")) * keyboard_sensitivity
-	var action_right = int(Input.is_action_pressed("turn_right")) * keyboard_sensitivity
+	var action_forward = Input.get_action_raw_strength("move_forward")
+	var action_backward = Input.get_action_raw_strength("move_backward")
+	var action_left = Input.get_action_raw_strength("turn_left")
+	var action_right = Input.get_action_raw_strength("turn_right")
+
+	right_input = (action_forward - action_backward) + (action_right - action_left)
+	left_input = (action_forward - action_backward) + (action_left - action_right)
 	
-	right_input = (action_forward - action_backward) + (action_left - action_right)
-	left_input = (action_forward - action_backward) + (action_right - action_left)
-
-	# Joystick (modo japonês)
-	left_input += Input.get_axis("left_wheel_negative", "left_wheel_positive") * joystick_sensitivity
-	right_input += Input.get_axis("right_wheel_negative", "right_wheel_positive") * joystick_sensitivity
-
+	right_input += Input.get_axis("left_wheel_negative", "left_wheel_positive") * joystick_sensitivity
+	left_input += Input.get_axis("right_wheel_negative", "right_wheel_positive") * joystick_sensitivity
+	print('left_input: ', left_input)
+	print('right_input: ', right_input)
 	# Retornar valores normalizados
 	return Vector2(clamp(left_input, -1.0, 1.0), clamp(right_input, -1.0, 1.0))
