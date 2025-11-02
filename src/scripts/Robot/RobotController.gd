@@ -103,9 +103,13 @@ func _apply_movement(delta: float) -> void:
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
 		if collider is RigidBody2D:
-			var push_force = 50000.0
-			var push_direction = collision.get_normal() * -1
-			collider.apply_central_force(push_direction * push_force * _scale)
+			var forward_direction = Vector2.RIGHT.rotated(rotation)
+			var collision_direction = collision.get_normal() * -1
+			var dot_product = forward_direction.dot(collision_direction)
+
+			if dot_product > 0.5:
+				var push_force = 80000.0
+				collider.apply_central_force(collision_direction * push_force * _scale)
 
 func _update_visual_state() -> void:
 	if not left_wheel_in_arena and not right_wheel_in_arena:

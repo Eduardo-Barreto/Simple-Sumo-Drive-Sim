@@ -14,9 +14,10 @@ size = Vector2(18.250002, 7.12498)
 [node name="Enemy" type="RigidBody2D"]
 collision_layer = 2
 collision_mask = 3
+mass = 0.5
 gravity_scale = 0.0
-linear_damp = 10.0
-angular_damp = 10.0
+linear_damp = 35.0
+angular_damp = 35.0
 
 [node name="EnemyAsset" type="Sprite2D" parent="."]
 modulate = Color(1, 0.5, 0.5, 1)
