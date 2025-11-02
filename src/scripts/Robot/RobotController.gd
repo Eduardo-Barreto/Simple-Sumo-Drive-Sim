@@ -4,7 +4,7 @@ extends CharacterBody2D
 ## Rotação máxima do motor em RPM
 @export var motor_rpm: float = 6380
 ## Tensão nominal do motor em V
-@export var motor_voltage: float = 12.0
+@export var motor_voltage: float = 12
 ## Tensão nominal de uma celula em V
 @export var cell_voltage: float = 4.2
 ## Tensão nominal da bateria em V
@@ -12,7 +12,7 @@ extends CharacterBody2D
 ## Raio da roda em mm
 @export var wheel_radius_mm: float = 23
 ## Distância entre rodas em mm
-@export var wheels_distance_mm: float = 94.8
+@export var wheels_distance_mm: float = 75
 ## Fator de redução (1.0 para sem redução)
 @export var reduction_factor: float = 7.92
 
@@ -21,6 +21,10 @@ extends CharacterBody2D
 var left_input: float = 0.0
 var right_input: float = 0.0
 var counter = 0
+
+# Posição e rotação iniciais para reset
+var initial_position: Vector2
+var initial_rotation: float
 
 var _scale
 var battery_voltage
@@ -39,7 +43,16 @@ func _ready() -> void:
 	wheel_radius_mm *= _scale
 	battery_voltage = cell_voltage * battery_cells
 
+	# Guardar posição e rotação iniciais para reset
+	initial_position = position
+	initial_rotation = rotation
+
 func _physics_process(delta: float) -> void:
+	# Verificar se o botão de reset foi pressionado
+	if Input.is_action_just_pressed("reset"):
+		reset_robot()
+		return
+
 	var inputs = input_manager.get_normalized_inputs()
 	left_input = inputs.x
 	right_input = inputs.y
@@ -84,3 +97,11 @@ func _apply_movement(delta: float) -> void:
 	velocity = Vector2(linear_speed, 0).rotated(rotation)
 	move_and_slide()
 	rotation += angular_speed * delta
+
+func reset_robot() -> void:
+	"""Reseta o robô para a posição e rotação iniciais"""
+	position = initial_position
+	rotation = initial_rotation
+	velocity = Vector2.ZERO
+	left_input = 0.0
+	right_input = 0.0

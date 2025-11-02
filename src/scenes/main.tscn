@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bd037oyww2qj3"]
 
-[ext_resource type="Texture2D" uid="uid://4qltxgydmlw1" path="res://assets/jonai.png" id="1_f7ix6"]
-[ext_resource type="Texture2D" uid="uid://eyqg3j0066tu" path="res://assets/dohyo.png" id="2_iyht1"]
+[ext_resource type="Texture2D" uid="uid://hbgs5ofjd5tq" path="res://assets/jonai.png" id="1_f7ix6"]
+[ext_resource type="Texture2D" uid="uid://co3f1nm3ojqo6" path="res://assets/dohyo.png" id="2_iyht1"]
 [ext_resource type="PackedScene" uid="uid://j3xfx5o3yv6x" path="res://scenes/Robot.tscn" id="3_h8cmm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_41r41"]
@@ -25,6 +25,7 @@ shape = SubResource("CircleShape2D_41r41")
 
 [node name="Sumo" parent="." instance=ExtResource("3_h8cmm")]
 position = Vector2(784, 360)
+rotation = 3.1415927
 motion_mode = 1
 
 [node name="Border" type="StaticBody2D" parent="."]
