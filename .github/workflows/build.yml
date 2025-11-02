@@ -21,7 +21,7 @@ jobs:
         working-directory: ./src
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Move export templates into position
         run: |
@@ -53,7 +53,7 @@ jobs:
         run: zip -r game_web.zip build/web
 
       - name: Upload Web artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: game_web
           path: src/game_web.zip
