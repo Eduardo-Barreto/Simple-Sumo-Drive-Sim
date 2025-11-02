@@ -1,11 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://j3xfx5o3yv6x"]
+[gd_scene load_steps=7 format=3 uid="uid://j3xfx5o3yv6x"]
 
-[ext_resource type="Script" path="res://scripts/Robot/RobotController.gd" id="1_03js5"]
-[ext_resource type="Script" path="res://scripts/Robot/RobotInput.gd" id="1_fqlmm"]
-[ext_resource type="Texture2D" uid="uid://ply4bqol2nd4" path="res://assets/sumo.png" id="2_ii2q7"]
+[ext_resource type="Script" uid="uid://b1oxrue6nppij" path="res://scripts/Robot/RobotController.gd" id="1_03js5"]
+[ext_resource type="Script" uid="uid://b0q27j20qmcpw" path="res://scripts/Robot/RobotInput.gd" id="1_fqlmm"]
+[ext_resource type="Texture2D" uid="uid://co88mu7fk60h0" path="res://assets/sumo.png" id="2_ii2q7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0an5p"]
 size = Vector2(200, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tctbf"]
+size = Vector2(45, 17.49997)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oram6"]
+size = Vector2(45.000008, 17.49992)
 
 [node name="Sumo" type="CharacterBody2D"]
 scale = Vector2(0.4, 0.4)
@@ -18,8 +24,23 @@ texture = ExtResource("2_ii2q7")
 offset = Vector2(0, -53.3333)
 
 [node name="SumoCollision" type="CollisionShape2D" parent="."]
-position = Vector2(52.5, -2.27374e-13)
+position = Vector2(52.499996, -2.2737397e-13)
+scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_0an5p")
 
 [node name="RobotInput" type="Node" parent="."]
 script = ExtResource("1_fqlmm")
+
+[node name="LeftWheelDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWheelDetector"]
+position = Vector2(2.4999964, -73.74997)
+scale = Vector2(0.99999976, 0.99999976)
+shape = SubResource("RectangleShape2D_tctbf")
+
+[node name="RightWheelDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWheelDetector"]
+position = Vector2(2.4999962, 76.24994)
+scale = Vector2(0.99999946, 0.99999946)
+shape = SubResource("RectangleShape2D_oram6")

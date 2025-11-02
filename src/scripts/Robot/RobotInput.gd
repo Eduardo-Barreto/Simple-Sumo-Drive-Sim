@@ -22,7 +22,5 @@ func get_normalized_inputs() -> Vector2:
 	
 	right_input += Input.get_axis("left_wheel_negative", "left_wheel_positive") * joystick_sensitivity
 	left_input += Input.get_axis("right_wheel_negative", "right_wheel_positive") * joystick_sensitivity
-	print('left_input: ', left_input)
-	print('right_input: ', right_input)
-	# Retornar valores normalizados
+
 	return Vector2(clamp(left_input, -1.0, 1.0), clamp(right_input, -1.0, 1.0))

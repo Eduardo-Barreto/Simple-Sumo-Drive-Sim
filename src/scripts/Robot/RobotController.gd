@@ -17,14 +17,18 @@ extends CharacterBody2D
 @export var reduction_factor: float = 7.92
 
 @onready var input_manager: Node = $RobotInput
+@onready var left_wheel_detector: Area2D = $LeftWheelDetector
+@onready var right_wheel_detector: Area2D = $RightWheelDetector
 
 var left_input: float = 0.0
 var right_input: float = 0.0
 var counter = 0
 
-# Posição e rotação iniciais para reset
 var initial_position: Vector2
 var initial_rotation: float
+
+var left_wheel_in_arena: bool = true
+var right_wheel_in_arena: bool = true
 
 var _scale
 var battery_voltage
@@ -37,18 +41,21 @@ var angular_speed
 
 func _ready() -> void:
 	_print_parameters()
-	# Configurações físicas baseadas na escala global
+
 	_scale = Global.world_scale
 	wheels_distance_mm *= _scale
 	wheel_radius_mm *= _scale
 	battery_voltage = cell_voltage * battery_cells
 
-	# Guardar posição e rotação iniciais para reset
 	initial_position = position
 	initial_rotation = rotation
 
+	left_wheel_detector.area_exited.connect(_on_left_wheel_exited)
+	left_wheel_detector.area_entered.connect(_on_left_wheel_entered)
+	right_wheel_detector.area_exited.connect(_on_right_wheel_exited)
+	right_wheel_detector.area_entered.connect(_on_right_wheel_entered)
+
 func _physics_process(delta: float) -> void:
-	# Verificar se o botão de reset foi pressionado
 	if Input.is_action_just_pressed("reset"):
 		reset_robot()
 		return
@@ -57,6 +64,7 @@ func _physics_process(delta: float) -> void:
 	left_input = inputs.x
 	right_input = inputs.y
 
+	_update_visual_state()
 	_apply_movement(delta)
 
 func _print_parameters() -> void:
@@ -74,34 +82,51 @@ func _print_parameters() -> void:
 	print('angular_speed: ', angular_speed)
 
 func _apply_movement(delta: float) -> void:
-	# Velocidade física (mm/s) de cada roda
 	max_speed = (motor_rpm / 60) * (2 * PI * wheel_radius_mm) * (battery_voltage / motor_voltage)
-
-	# Aplicar fator de redução
 	reduced_max_speed = max_speed / reduction_factor
 
-	# Velocidade das rodas, ajustada pelas entradas normalizadas
-	left_wheel_speed = left_input * reduced_max_speed
-	right_wheel_speed = right_input * reduced_max_speed
-	
+	left_wheel_speed = left_input * reduced_max_speed if right_wheel_in_arena else 0.0
+	right_wheel_speed = right_input * reduced_max_speed if left_wheel_in_arena else 0.0
 
-	# Calcular velocidades linear e angular
 	linear_speed = (right_wheel_speed + left_wheel_speed) / 2.0
 	angular_speed = (right_wheel_speed - left_wheel_speed) / wheels_distance_mm / 2
 
 	counter += 1
 	if counter % 10 == 1:
-		pass# _print_parameters()
+		pass
 
-	# Movimento do robô
 	velocity = Vector2(linear_speed, 0).rotated(rotation)
 	move_and_slide()
 	rotation += angular_speed * delta
 
+func _update_visual_state() -> void:
+	if not left_wheel_in_arena and not right_wheel_in_arena:
+		modulate = Color.RED
+	else:
+		modulate = Color.WHITE
+
 func reset_robot() -> void:
-	"""Reseta o robô para a posição e rotação iniciais"""
 	position = initial_position
 	rotation = initial_rotation
 	velocity = Vector2.ZERO
 	left_input = 0.0
 	right_input = 0.0
+	left_wheel_in_arena = true
+	right_wheel_in_arena = true
+	modulate = Color.WHITE
+
+func _on_left_wheel_exited(area: Area2D) -> void:
+	if area.name == "Dohyo":
+		left_wheel_in_arena = false
+
+func _on_left_wheel_entered(area: Area2D) -> void:
+	if area.name == "Dohyo":
+		left_wheel_in_arena = true
+
+func _on_right_wheel_exited(area: Area2D) -> void:
+	if area.name == "Dohyo":
+		right_wheel_in_arena = false
+
+func _on_right_wheel_entered(area: Area2D) -> void:
+	if area.name == "Dohyo":
+		right_wheel_in_arena = true
