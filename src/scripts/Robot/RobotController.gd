@@ -99,6 +99,14 @@ func _apply_movement(delta: float) -> void:
 	move_and_slide()
 	rotation += angular_speed * delta
 
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collider is RigidBody2D:
+			var push_force = 50000.0
+			var push_direction = collision.get_normal() * -1
+			collider.apply_central_force(push_direction * push_force * _scale)
+
 func _update_visual_state() -> void:
 	if not left_wheel_in_arena and not right_wheel_in_arena:
 		modulate = Color.RED

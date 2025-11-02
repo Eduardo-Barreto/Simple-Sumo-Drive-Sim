@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bd037oyww2qj3"]
+[gd_scene load_steps=7 format=3 uid="uid://bd037oyww2qj3"]
 
 [ext_resource type="Texture2D" uid="uid://hbgs5ofjd5tq" path="res://assets/jonai.png" id="1_f7ix6"]
 [ext_resource type="Texture2D" uid="uid://co3f1nm3ojqo6" path="res://assets/dohyo.png" id="2_iyht1"]
 [ext_resource type="PackedScene" uid="uid://j3xfx5o3yv6x" path="res://scenes/Robot.tscn" id="3_h8cmm"]
+[ext_resource type="Script" uid="uid://lnf3rk321o3k" path="res://scripts/EnemySpawner.gd" id="4_spawner"]
+[ext_resource type="PackedScene" uid="uid://bq8v7x3y4k2m1" path="res://scenes/Enemy.tscn" id="5_enemy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_41r41"]
 radius = 770.0
@@ -14,6 +16,8 @@ position = Vector2(640, 360)
 texture = ExtResource("1_f7ix6")
 
 [node name="Dohyo" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 3
 position = Vector2(640, 360)
 scale = Vector2(0.4, 0.4)
 
@@ -29,7 +33,14 @@ rotation = 3.1415927
 motion_mode = 1
 
 [node name="Border" type="StaticBody2D" parent="."]
+collision_layer = 8
+collision_mask = 0
 
 [node name="BorderCollision" type="CollisionPolygon2D" parent="Border"]
 build_mode = 1
 polygon = PackedVector2Array(1280, 720, 1280, 0, 0, 0, 0, 720)
+
+[node name="EnemySpawner" type="Node2D" parent="."]
+script = ExtResource("4_spawner")
+enemy_scene = ExtResource("5_enemy")
+spawn_position = Vector2(500, 360)

@@ -14,6 +14,8 @@ size = Vector2(45, 17.49997)
 size = Vector2(45.000008, 17.49992)
 
 [node name="Sumo" type="CharacterBody2D"]
+collision_layer = 1
+collision_mask = 3
 scale = Vector2(0.4, 0.4)
 script = ExtResource("1_03js5")
 
@@ -32,6 +34,8 @@ shape = SubResource("RectangleShape2D_0an5p")
 script = ExtResource("1_fqlmm")
 
 [node name="LeftWheelDetector" type="Area2D" parent="."]
+collision_layer = 1
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWheelDetector"]
 position = Vector2(2.4999964, -73.74997)
@@ -39,6 +43,8 @@ scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_tctbf")
 
 [node name="RightWheelDetector" type="Area2D" parent="."]
+collision_layer = 1
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWheelDetector"]
 position = Vector2(2.4999962, 76.24994)

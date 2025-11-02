@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq8v7x3y4k2m1"]
+
+[ext_resource type="Texture2D" uid="uid://co88mu7fk60h0" path="res://assets/sumo.png" id="1_enemy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_enemy"]
+size = Vector2(200, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_wheel_enemy"]
+size = Vector2(19, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right_wheel_enemy"]
+size = Vector2(18.250002, 7.12498)
+
+[node name="Enemy" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 3
+gravity_scale = 0.0
+linear_damp = 10.0
+angular_damp = 10.0
+
+[node name="EnemyAsset" type="Sprite2D" parent="."]
+modulate = Color(1, 0.5, 0.5, 1)
+position = Vector2(20, 1)
+rotation = 1.5708
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_enemy")
+offset = Vector2(0, -53.3333)
+
+[node name="EnemyCollision" type="CollisionShape2D" parent="."]
+position = Vector2(40, 0)
+scale = Vector2(0.4, 0.4)
+shape = SubResource("RectangleShape2D_enemy")
+
+[node name="LeftWheelDetector" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWheelDetector"]
+position = Vector2(20.5, -29)
+shape = SubResource("RectangleShape2D_left_wheel_enemy")
+
+[node name="RightWheelDetector" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWheelDetector"]
+position = Vector2(21.125, 30.56249)
+shape = SubResource("RectangleShape2D_right_wheel_enemy")
